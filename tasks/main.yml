@@ -37,4 +37,4 @@
 - name: Ensure Beszel agent service is started and enabled
   community.general.homebrew_services:
     name: "{{ beszel_agent_package }}"
-    state: started
+    state: restarted
