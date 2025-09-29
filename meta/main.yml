@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  role_name: beszel_agent
+  author: glennbrown
+  description: Installs Beszel agent on macOS using Homebrew
+  license: MIT
+  min_ansible_version: "2.9"
+  
+  platforms:
+    - name: macOS
+      versions:
+        - all
+
+  galaxy_tags:
+    - beszel
+    - agent
+    - macos
+    - homebrew
+
+dependencies: []

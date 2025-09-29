@@ -1,0 +1,40 @@
+---
+# Tasks for installing Beszel agent on macOS
+
+- name: Ensure Beszel configuration directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ ansible_env.HOME }}/.config/beszel"
+    - "{{ ansible_env.HOME }}/.cache/beszel"
+
+- name: Verify required variables are set
+  ansible.builtin.fail:
+    msg: "Required variable '{{ item }}' is not set"
+  when: not vars[item] is defined or vars[item] | length == 0
+  loop:
+    - beszel_agent_sshkey
+    - beszel_agent_token
+
+- name: Configure Beszel agent environment file
+  ansible.builtin.template:
+    src: beszel-agent.env.j2
+    dest: "{{ ansible_env.HOME }}/.config/beszel/beszel-agent.env"
+    mode: '0600'
+
+- name: Ensure Homebrew tap for Beszel agent is added
+  community.general.homebrew_tap:
+    name: "{{ beszel_agent_tap }}"
+    state: present
+
+- name: Install Beszel agent via Homebrew
+  community.general.homebrew:
+    name: "{{ beszel_agent_package }}"
+    state: "{{ beszel_agent_state }}"
+
+- name: Ensure Beszel agent service is started and enabled
+  community.general.homebrew_services:
+    name: "{{ beszel_agent_package }}"
+    state: started

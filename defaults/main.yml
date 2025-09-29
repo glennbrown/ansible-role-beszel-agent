@@ -1,0 +1,15 @@
+---
+# Default variables for beszel-agent role
+
+# State of the Beszel agent package (present/absent)
+beszel_agent_state: present
+
+# Homebrew tap for Beszel agent
+beszel_agent_tap: henrygd/beszel
+
+# Package name for Beszel agent
+beszel_agent_package: beszel-agent
+
+# Required variables (no defaults - must be provided)
+# beszel_agent_sshkey: ""     # SSH public key for Beszel agent
+# beszel_agent_token: ""      # Authentication token for Beszel agent
